@@ -1,4 +1,3 @@
-
 local component = require("component")
 local event = require("event")
 local unicode = require("unicode")
@@ -22,7 +21,7 @@ local hologramAvailable = component.isAvailable("hologram")
 if component.isAvailable("printer3d") then
 	printer = component.printer3d
 else
-	ecs.error("Этой программе требуется 3D-принтер для работы.")
+	ecs.error("Este programa requer a mpressora 3D para trabalhar.")
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -63,8 +62,8 @@ local maxShapeCount = printer.getMaxShapeCount()
 if maxShapeCount > 24 then maxShapeCount = 24 end
 local currentMode = 1
 local modes = {
-	"неактивная",
-	"активная"
+	"Inativo",
+	"Ativo"
 }
 local currentTexture = "planks_oak"
 local currentTint = ecs.colors.orange
@@ -198,7 +197,7 @@ local function printKeyValue(x, y, keyColor, valueColor, key, value, limit)
 end
 
 local function getShapeCoords()
-	local coords = "элемент не создан"
+	local coords = "Nao criou elemento"
 	if model.shapes[currentShape] then
 		coords = "(" .. model.shapes[currentShape][1] .. "," .. model.shapes[currentShape][2] .. "," .. model.shapes[currentShape][3] .. ");(" .. model.shapes[currentShape][4] .. "," .. model.shapes[currentShape][5] .. "," .. model.shapes[currentShape][6] .. ")"
 	end
@@ -219,29 +218,29 @@ local function drawToolbar()
 	--Текущий слой
 	bigLetters.drawText(x, y, colors.toolbarBigLetters, fixNumber(currentLayer))
 	y = y + 6
-	centerText(y, colors.toolbarText, "Текущий слой")
+	centerText(y, colors.toolbarText, "Camada atual")
 
 	--Управление элементом
 	y = y + 2
 	x = xToolbar + 2
 	toolBarInfoLine(y, "Управление моделью"); y = y + 2
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Имя", model.label, widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Описание", model.tooltip, widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Как кнопка", tostring(model.buttonMode), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Редстоун-сигнал", tostring(model.emitRedstone), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Коллизия", tostring(model.collidable[currentMode]), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Уровень света", tostring(model.lightLevel), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Nome", model.label, widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Descicao", model.tooltip, widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Um Botao?", tostring(model.buttonMode), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Emite Redstone?", tostring(model.emitRedstone), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Colidivel?", tostring(model.collidable[currentMode]), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Nivel de luz", tostring(model.lightLevel), widthOfToolbar - 4); y = y + 1
 	y = y + 1
-	printKeyValue(x, y, ecs.colors.blue, colors.toolbarValueText, "Состояние", modes[currentMode], widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, ecs.colors.blue, colors.toolbarValueText, "Condicao", modes[currentMode], widthOfToolbar - 4); y = y + 1
 	y = y + 1
-	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Изменить параметры"); y = y + 4
-	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Напечатать"); y = y + 4
+	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Alterar Config"); y = y + 4
+	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Impressao"); y = y + 4
 	toolBarInfoLine(y, "Управление элементом " .. currentShape); y = y + 2
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Текстура", tostring(currentTexture), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Оттенок", ecs.HEXtoString(currentTint, 6, true), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Использовать оттенок", tostring(useTint), widthOfToolbar - 4); y = y + 1
-	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Позиция", getShapeCoords(), widthOfToolbar - 4); y = y + 2
-	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Изменить параметры "); y = y + 4
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Textura", tostring(currentTexture), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Sombra", ecs.HEXtoString(currentTint, 6, true), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Use Sombra", tostring(useTint), widthOfToolbar - 4); y = y + 1
+	printKeyValue(x, y, colors.toolbarKeyText, colors.toolbarValueText, "Posicao", getShapeCoords(), widthOfToolbar - 4); y = y + 2
+	addButton(y, colors.toolbarButtonBackground, colors.toolbarButtonText, "Alterar Config "); y = y + 4
 
 	--Элементы
 	toolBarInfoLine(y, "Выбор элемента"); y = y + 2
@@ -250,7 +249,7 @@ local function drawToolbar()
 end
 
 local function drawTopMenu(selected)
-	obj["TopMenu"] = ecs.drawTopMenu(1, 1, xSize - widthOfToolbar, colors.toolbarBackground, selected, {"Файл", 0x262626}, {"Проектор", 0x262626}, {"О программе", 0x262626})
+	obj["TopMenu"] = ecs.drawTopMenu(1, 1, xSize - widthOfToolbar, colors.toolbarBackground, selected, {"Arquivo", 0x262626}, {"Projetor", 0x262626}, {"Info", 0x262626})
 end
 
 local function renderCurrentLayerOnHologram(xStart, yStart, zStart)
@@ -324,7 +323,7 @@ local function printModel(count)
 
 	local success, reason = printer.commit(count)
 	if not success then
-		ecs.error("Ошибка печати: " .. reason)
+		ecs.error("Erro de Impressao: " .. reason)
 	end
 end
 
@@ -421,10 +420,10 @@ local function open(path)
 			drawAll()
 			drawModelOnHologram()
 		else
-			ecs.error("Файл имеет неизвестный формат. Поддерживаются только модели в формате .3dm.")
+			ecs.error("O arquivo tem um formato desconhecido. Suportado apenas em formato modelo .3dm.")
 		end
 	else
-		ecs.error("Файл \"" .. path .. "\" не существует")
+		ecs.error("arquivo \"" .. path .. "\" nao existe")
 	end
 end
 
@@ -510,44 +509,44 @@ while true do
 					buffer.draw()
 					os.sleep(0.2)
 
-					if key == "Напечатать" then
+					if key == "Impressao" then
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true,
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Напечатать"},
+							{"CenterText", ecs.colors.orange, "Impressao"},
 							{"EmptyLine"},
-							{"Slider", 0xFFFFFF, ecs.colors.orange, 1, 64, 1, "", " штук"},
+							{"Slider", 0xFFFFFF, ecs.colors.orange, 1, 64, 1, "", " pcs"},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[2] == "OK" then
 							printModel(data[1])
 						end
 
-					elseif key == "Изменить параметры" then
+					elseif key == "Alterar Config" then
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true,
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Параметры модели"},
+							{"CenterText", ecs.colors.orange, "Parametro do modelo"},
 							{"EmptyLine"},
 							{"Input", 0xFFFFFF, ecs.colors.orange, model.label},
 							{"Input", 0xFFFFFF, ecs.colors.orange, model.tooltip},
-							{"Selector", 0xFFFFFF, ecs.colors.orange, "Неактивная", "Активная"},
+							{"Selector", 0xFFFFFF, ecs.colors.orange, "Inativo", "Ativo"},
 							{"EmptyLine"},
-							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Как кнопка", model.buttonMode},
+							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Um Botao?", model.buttonMode},
 							{"EmptyLine"},
-							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Редстоун-сигнал", model.emitRedstone},
+							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Emite Redstone?", model.emitRedstone},
 							{"EmptyLine"},
-							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Коллизия", model.collidable[currentMode]},
+							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Colidivel?", model.collidable[currentMode]},
 							{"EmptyLine"},
-							{"Slider", 0xFFFFFF, ecs.colors.orange, 0, 15, model.lightLevel, "Уровень света: ", ""},
+							{"Slider", 0xFFFFFF, ecs.colors.orange, 0, 15, model.lightLevel, "Nivel de luz: ", ""},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[8] == "OK" then
 							model.label = data[1] or "Sample label"
 							model.tooltip = data[2] or "Sample tooltip"
-							if data[3] == "Активная" then
+							if data[3] == "Ativo" then
 								currentMode = 2
 							else
 								currentMode = 1
@@ -558,17 +557,17 @@ while true do
 							model.lightLevel = data[7]
 						end
 
-					elseif key == "Изменить параметры " then
+					elseif key == "Alterar Config " then
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true,
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Параметры элемента"},
+							{"CenterText", ecs.colors.orange, "Parametros do elemento"},
 							{"EmptyLine"},
 							{"Input", 0xFFFFFF, ecs.colors.orange, currentTexture},
 							{"Color", "Оттенок", currentTint},
 							{"EmptyLine"},
-							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Использовать оттенок", useTint},
+							{"Switch", ecs.colors.orange, 0xffffff, 0xFFFFFF, "Use Sombra", useTint},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[4] == "OK" then
@@ -600,87 +599,83 @@ while true do
 					-- buffer.draw()
 
 					local action
-					if key == "Файл" then
-						action = context.menu(obj.TopMenu[key][1] - 1, obj.TopMenu[key][2] + 1, {"Новый"}, "-", {"Открыть"}, {"Сохранить"}, "-", {"Выход"})
-					elseif key == "Проектор" then
-						action = context.menu(obj.TopMenu[key][1] - 1, obj.TopMenu[key][2] + 1, {"Масштаб", not hologramAvailable}, {"Отступ проекции", not hologramAvailable}, {"Изменить палитру", not hologramAvailable}, "-", {"Включить показ слоя", not hologramAvailable}, {"Отключить показ слоя", not hologramAvailable}, "-", {"Включить вращение", not hologramAvailable}, {"Отключить вращение", not hologramAvailable})
-					elseif key == "О программе" then
+					if key == "Arquivo" then
+						action = context.menu(obj.TopMenu[key][1] - 1, obj.TopMenu[key][2] + 1, {"Novo"}, "-", {"Abrir"}, {"Salvar"}, "-", {"Sair"})
+					elseif key == "Projetor" then
+						action = context.menu(obj.TopMenu[key][1] - 1, obj.TopMenu[key][2] + 1, {"escala", not hologramAvailable}, {"projecao compensada", not hologramAvailable}, {"Alterar a paleta", not hologramAvailable}, "-", {"Habilitar camada de exibicao", not hologramAvailable}, {"Camada de exibicao Disable", not hologramAvailable}, "-", {"permitir a rotacao", not hologramAvailable}, {"rotacao Disable", not hologramAvailable})
+					elseif key == "Info" then
 						ecs.universalWindow("auto", "auto", 36, 0x262626, true, 
 							{"EmptyLine"},
 							{"CenterText", ecs.colors.orange, "3DPrint v3.0"}, 
 							{"EmptyLine"},
-							{"CenterText", 0xFFFFFF, "Автор:"},
+							{"CenterText", 0xFFFFFF, "Autor:"},
 							{"CenterText", 0xBBBBBB, "Тимофеев Игорь"},
-							{"CenterText", 0xBBBBBB, "vk.com/id7799889"},
 							{"EmptyLine"},
-							{"CenterText", 0xFFFFFF, "Тестеры:"},
+							{"CenterText", 0xFFFFFF, "Testers:"},
 							{"CenterText", 0xBBBBBB, "Семёнов Сeмён"}, 
-							{"CenterText", 0xBBBBBB, "vk.com/day_z_utes"},
 							{"CenterText", 0xBBBBBB, "Бесфамильный Яков"},
-							{"CenterText", 0xBBBBBB, "vk.com/mathem"},
 							{"CenterText", 0xBBBBBB, "Егор Палиев"},
-							{"CenterText", 0xBBBBBB, "vk.com/mrherobrine"},
 							{"EmptyLine"},
 							{"Button", {ecs.colors.orange, 0xffffff, "OK"}}
 						)
 					end
 
-					if action == "Сохранить" then
+					if action == "Salvar" then
 						local data = ecs.universalWindow("auto", "auto", 30, 0x262626, true, 
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Сохранить как"},
+							{"CenterText", ecs.colors.orange, "salvar como"},
 							{"EmptyLine"},
-							{"Input", 0xFFFFFF, ecs.colors.orange, "Путь"},
+							{"Input", 0xFFFFFF, ecs.colors.orange, "arquivo"},
 							{"Selector", 0xFFFFFF, ecs.colors.orange, ".3dm"},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 						if data[3] == "OK" then
 							data[1] = data[1] or "Untitled"
 							local filename = data[1] .. data[2]
 							save(filename)
 						end
-					elseif action == "Открыть" then
+					elseif action == "Abrir" then
 						local data = ecs.universalWindow("auto", "auto", 30, 0x262626, true,
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Открыть"},
+							{"CenterText", ecs.colors.orange, "abrir"},
 							{"EmptyLine"},
-							{"Input", 0xFFFFFF, ecs.colors.orange, "Путь"},
+							{"Input", 0xFFFFFF, ecs.colors.orange, "arquivo"},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 						if data[2] == "OK" then
 							open(data[1])
 						end
-					elseif action == "Новый" then
+					elseif action == "Novo" then
 						model = {}
 						fixModelArray()
 						drawAll()
 						drawModelOnHologram()
-					elseif action == "Выход" then
+					elseif action == "Sair" then
 						gpu.setResolution(xOld, yOld)
 						buffer.start()	
 						buffer.draw(true)
 						if hologramAvailable then component.hologram.clear() end
 						return
-					elseif action == "Масштаб" then
+					elseif action == "escala" then
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true, 
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Изменить масштаб"},
+							{"CenterText", ecs.colors.orange, "Alterar a escala"},
 							{"EmptyLine"}, 
 							{"Slider", ecs.colors.white, ecs.colors.orange, 1, 100, math.ceil(component.hologram.getScale() * 100 / 4), "", "%"},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[2] == "OK" then
 							component.hologram.setScale(data[1] * 4 / 100)
 						end
-					elseif action == "Отступ проекции" then
+					elseif action == "projecao compensada" then
 						local translation = { component.hologram.getTranslation() }
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true, 
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Отступ проекции"},
+							{"CenterText", ecs.colors.orange, "projecao compensada"},
 							{"EmptyLine"}, 
 							{"CenterText", 0xFFFFFF, "Эти параметры позволяют проецировать"},
 							{"CenterText", 0xFFFFFF, "голограмму на некотором расстоянии от"},
@@ -691,22 +686,22 @@ while true do
 							{"Slider", 0xFFFFFF, ecs.colors.orange, 1, 100, translation[2] * 100, "Ось Y: ", "%"},
 							{"Slider", 0xFFFFFF, ecs.colors.orange, 1, 100, translation[3] * 100, "Ось Z: ", "%"},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[4] == "OK" then
 							component.hologram.setTranslation(data[1] / 100, data[2] / 100, data[3] / 100)
 						end
-					elseif action == "Изменить палитру" then
+					elseif action == "Alterar a paleta" then
 						local data = ecs.universalWindow("auto", "auto", 36, 0x262626, true,
 							{"EmptyLine"},
-							{"CenterText", ecs.colors.orange, "Палитра проектора"},
+							{"CenterText", ecs.colors.orange, "projector Palette"},
 							{"EmptyLine"},
-							{"Color", "Цвет активного элемента", component.hologram.getPaletteColor(2)},
-							{"Color", "Цвет других элементов", component.hologram.getPaletteColor(1)},
-							{"Color", "Цвет рамки высоты", component.hologram.getPaletteColor(3)},
+							{"Color", "A cor do elemento activa", component.hologram.getPaletteColor(2)},
+							{"Color", "A cor de outros elementos", component.hologram.getPaletteColor(1)},
+							{"Color", "alturas beira da cor", component.hologram.getPaletteColor(3)},
 							{"EmptyLine"},
-							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Отмена"}}
+							{"Button", {ecs.colors.orange, 0xffffff, "OK"}, {0x999999, 0xffffff, "Cancelar"}}
 						)
 
 						if data[4] == "OK" then
@@ -714,15 +709,15 @@ while true do
 							component.hologram.setPaletteColor(1, data[2])
 							component.hologram.setPaletteColor(3, data[3])
 						end
-					elseif action == "Включить показ слоя" then
+					elseif action == "Habilitar camada de exibicao" then
 						showLayerOnHologram = true
 						drawModelOnHologram()
-					elseif action == "Отключить показ слоя" then
+					elseif action == "Camada de exibicao Disable" then
 						showLayerOnHologram = false
 						drawModelOnHologram()
-					elseif action == "Включить вращение" then
+					elseif action == "permitir a rotacao" then
 						component.hologram.setRotationSpeed(15, 0, 23, 0)
-					elseif action == "Отключить вращение" then
+					elseif action == "rotacao Disable" then
 						component.hologram.setRotationSpeed(0, 0, 0, 0)
 					end
 
@@ -746,20 +741,3 @@ while true do
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
